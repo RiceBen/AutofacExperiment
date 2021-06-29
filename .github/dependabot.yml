@@ -8,9 +8,9 @@ updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/AutofacExperiment/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "monthly"
       
   - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/NineYi.ERP.DA.ERPDB/" # Location of package manifests
+    directory: "/AutofacExperiment.Access/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "monthly"

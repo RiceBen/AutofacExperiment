@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using NineYi.ERP.DA.ERPDB.Deamon;
+using AutofacExperiment.Access.Deamon;
 
-namespace NineYi.ERP.DA.ERPDB.Modules
+namespace AutofacExperiment.Access.Modules
 {
     public class DAModules : Autofac.Module
     {

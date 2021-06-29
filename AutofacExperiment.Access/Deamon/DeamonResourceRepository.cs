@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NineYi.ERP.DA.ERPDB.Deamon
+namespace AutofacExperiment.Access.Deamon
 {
     /// <summary>
     /// Deamon resource repository.
     /// </summary>
-    /// <seealso cref="NineYi.ERP.DA.ERPDB.Deamon.IDeamonResourceRepository" />
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="NineYi.ERP.DA.ERPDB.Deamon.IDeamonResourceRepository"/>
+    /// <seealso cref="System.IDisposable"/>
     public class DeamonResourceRepository : IDeamonResourceRepository
     {
         /// <summary>
         /// Gets the name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
+        /// <value>The name.</value>
         public string Name { get { return typeof(DeamonResourceRepository).FullName; } }
 
         /// <summary>
@@ -34,7 +28,7 @@ namespace NineYi.ERP.DA.ERPDB.Deamon
         /// </summary>
         public void ResourceMonster()
         {
-            Console.WriteLine(string.Format("Object HashCode:{0}",this.GetHashCode()));
+            Console.WriteLine(string.Format("Object HashCode:{0}", this.GetHashCode()));
         }
     }
 }
