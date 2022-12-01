@@ -9,7 +9,7 @@ updates:
     directory: "/AutofacExperiment/" # Location of package manifests
     schedule:
       interval: "monthly"
-      
+
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/AutofacExperiment.Access/" # Location of package manifests
     schedule:
