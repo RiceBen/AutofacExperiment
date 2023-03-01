@@ -15,10 +15,8 @@ internal class Program
         var builder = new ContainerBuilder();
         builder.RegisterModule<DAModules>();
 
-        using (var container = builder.Build())
-        {
-            MemoryLeakMethod02(container);
-        }
+        using var container = builder.Build();
+        MemoryLeakMethod02(container);
     }
 
     /// <summary>
@@ -27,7 +25,7 @@ internal class Program
     /// <param name="container"></param>
     private static void MemoryLeakMethod01(IContainer container)
     {
-        while (1 == 1)
+        while (true)
         {
             var resource = container.Resolve<IDeamonResourceRepository>();
 
@@ -41,13 +39,11 @@ internal class Program
     /// <param name="container">The container.</param>
     private static void MemoryLeakMethod02(IContainer container)
     {
-        using (var lifetimescope = container.BeginLifetimeScope())
+        using var lifetimescope = container.BeginLifetimeScope();
+        while (true)
         {
-            while (1 == 1)
-                using (var resource = lifetimescope.Resolve<IDeamonResourceRepository>())
-                {
-                    resource.ResourceMonster();
-                }
+            using var resource = lifetimescope.Resolve<IDeamonResourceRepository>();
+            resource.ResourceMonster();
         }
     }
 
@@ -57,11 +53,11 @@ internal class Program
     /// <param name="container"></param>
     private static void MemoryLeakMethod03(IContainer container)
     {
-        while (1 == 1)
-            using (var resource = container.Resolve<IDeamonResourceRepository>())
-            {
-                resource.ResourceMonster();
-            }
+        while (true)
+        {
+            using var resource = container.Resolve<IDeamonResourceRepository>();
+            resource.ResourceMonster();
+        }
     }
 
     /// <summary>
@@ -70,7 +66,7 @@ internal class Program
     /// <param name="container"></param>
     private static void NoMemoryLeakMethod01(IContainer container)
     {
-        while (1 == 1)
+        while (true)
         {
             var resource = new DeamonResourceRepository();
             resource.ResourceMonster();
@@ -83,14 +79,12 @@ internal class Program
     /// <param name="container"></param>
     private static void NoMemoryLeakMethod02(IContainer container)
     {
-        while (1 == 1)
-            using (var lifetimescope = container.BeginLifetimeScope())
-            {
-                using (var resource = lifetimescope.Resolve<IDeamonResourceRepository>())
-                {
-                    resource.ResourceMonster();
-                }
-            }
+        while (true)
+        {
+            using var lifetimescope = container.BeginLifetimeScope();
+            using var resource = lifetimescope.Resolve<IDeamonResourceRepository>();
+            resource.ResourceMonster();
+        }
     }
 
     /// <summary>
@@ -99,13 +93,13 @@ internal class Program
     /// <param name="container"></param>
     private static void NoMemoryLeakMethod03(IContainer container)
     {
-        while (1 == 1)
-            using (var lifetimescope = container.BeginLifetimeScope())
-            {
-                var resource = lifetimescope.Resolve<IDeamonResourceRepository>();
+        while (true)
+        {
+            using var lifetimeScope = container.BeginLifetimeScope();
+            var resource = lifetimeScope.Resolve<IDeamonResourceRepository>();
 
-                resource.ResourceMonster();
-            }
+            resource.ResourceMonster();
+        }
     }
 
     /// <summary>
@@ -114,16 +108,12 @@ internal class Program
     /// <param name="container"></param>
     private static void NoMemoryLeakMethod04(IContainer container)
     {
-        using (var lifetimescope = container.BeginLifetimeScope())
+        using var lifetimeScope = container.BeginLifetimeScope();
+        while (true)
         {
-            while (1 == 1)
-                using (var childScope = lifetimescope.BeginLifetimeScope())
-                {
-                    using (var resource = childScope.Resolve<IDeamonResourceRepository>())
-                    {
-                        resource.ResourceMonster();
-                    }
-                }
+            using var childScope = lifetimeScope.BeginLifetimeScope();
+            using var resource = childScope.Resolve<IDeamonResourceRepository>();
+            resource.ResourceMonster();
         }
     }
 }

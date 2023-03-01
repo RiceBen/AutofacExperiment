@@ -13,7 +13,7 @@ public class DeamonResourceRepository : IDeamonResourceRepository
     ///     Gets the name.
     /// </summary>
     /// <value>The name.</value>
-    public string Name => typeof(DeamonResourceRepository).FullName;
+    private static string Name => typeof(DeamonResourceRepository).FullName;
 
     /// <summary>
     ///     執行與釋放 (Free)、釋放 (Release) 或重設 Unmanaged 資源相關聯之應用程式定義的工作。
