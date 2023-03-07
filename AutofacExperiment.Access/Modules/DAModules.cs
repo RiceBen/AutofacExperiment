@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using AutofacExperiment.Access.Deamon;
-using Module = Autofac.Module;
 
 namespace AutofacExperiment.Access.Modules;
 
