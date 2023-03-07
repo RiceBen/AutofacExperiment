@@ -1,16 +1,19 @@
 # To get started with Dependabot version updates, you'll need to specify which
 # package ecosystems to update and where the package manifests are located.
 # Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
 updates:
-  - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/AutofacExperiment/" # Location of package manifests
+  - package-ecosystem: "nuget"
+    directory: "/"
     schedule:
       interval: "monthly"
-
-  - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/AutofacExperiment.Access/" # Location of package manifests
-    schedule:
-      interval: "monthly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Asia/Taipei"
+    # Disable all pull requests for Docker dependencies
+    open-pull-requests-limit: 0
+    commit-message:
+      prefix: "[Bot]"
+      include: "scope"
