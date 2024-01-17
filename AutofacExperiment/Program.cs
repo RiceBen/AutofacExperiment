@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using AutofacExperiment.Access.Deamon;
+using AutofacExperiment.Access.Daemon;
 using AutofacExperiment.Access.Modules;
 
 namespace AutofacExperiment;
@@ -27,7 +27,7 @@ internal class Program
     {
         while (true)
         {
-            var resource = container.Resolve<IDeamonResourceRepository>();
+            var resource = container.Resolve<IDaemonResourceRepository>();
 
             resource.ResourceMonster();
         }
@@ -42,7 +42,7 @@ internal class Program
         using var lifetimescope = container.BeginLifetimeScope();
         while (true)
         {
-            using var resource = lifetimescope.Resolve<IDeamonResourceRepository>();
+            using var resource = lifetimescope.Resolve<IDaemonResourceRepository>();
             resource.ResourceMonster();
         }
     }
@@ -55,7 +55,7 @@ internal class Program
     {
         while (true)
         {
-            using var resource = container.Resolve<IDeamonResourceRepository>();
+            using var resource = container.Resolve<IDaemonResourceRepository>();
             resource.ResourceMonster();
         }
     }
@@ -68,7 +68,7 @@ internal class Program
     {
         while (true)
         {
-            var resource = new DeamonResourceRepository();
+            var resource = new DaemonResourceRepository();
             resource.ResourceMonster();
         }
     }
@@ -82,7 +82,7 @@ internal class Program
         while (true)
         {
             using var lifetimescope = container.BeginLifetimeScope();
-            using var resource = lifetimescope.Resolve<IDeamonResourceRepository>();
+            using var resource = lifetimescope.Resolve<IDaemonResourceRepository>();
             resource.ResourceMonster();
         }
     }
@@ -96,7 +96,7 @@ internal class Program
         while (true)
         {
             using var lifetimeScope = container.BeginLifetimeScope();
-            var resource = lifetimeScope.Resolve<IDeamonResourceRepository>();
+            var resource = lifetimeScope.Resolve<IDaemonResourceRepository>();
 
             resource.ResourceMonster();
         }
@@ -112,7 +112,7 @@ internal class Program
         while (true)
         {
             using var childScope = lifetimeScope.BeginLifetimeScope();
-            using var resource = childScope.Resolve<IDeamonResourceRepository>();
+            using var resource = childScope.Resolve<IDaemonResourceRepository>();
             resource.ResourceMonster();
         }
     }

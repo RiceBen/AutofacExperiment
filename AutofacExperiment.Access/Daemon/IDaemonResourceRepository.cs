@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace AutofacExperiment.Access.Deamon;
+namespace AutofacExperiment.Access.Daemon;
 
 /// <summary>
 ///     Iinterface of deamon resource repository
 /// </summary>
-public interface IDeamonResourceRepository : IDisposable
+public interface IDaemonResourceRepository : IDisposable
 {
     /// <summary>
     ///     Eat resource
