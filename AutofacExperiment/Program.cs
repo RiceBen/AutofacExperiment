@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Threading;
+using Autofac;
 using AutofacExperiment.Access.Daemon;
 using AutofacExperiment.Access.Modules;
 
@@ -16,7 +17,7 @@ internal class Program
         builder.RegisterModule<DAModules>();
 
         using var container = builder.Build();
-        MemoryLeakMethod02(container);
+        MemoryLeakMethod01(container);
     }
 
     /// <summary>
@@ -27,9 +28,11 @@ internal class Program
     {
         while (true)
         {
-            var resource = container.Resolve<IDaemonResourceRepository>();
+            var service = container.Resolve<IDomainService>();
 
-            resource.ResourceMonster();
+            service.GetServiceName();
+            
+            Thread.Sleep(1000);
         }
     }
 
@@ -39,24 +42,12 @@ internal class Program
     /// <param name="container">The container.</param>
     private static void MemoryLeakMethod02(IContainer container)
     {
-        using var lifetimescope = container.BeginLifetimeScope();
+        using var lifetimeScope = container.BeginLifetimeScope();
         while (true)
         {
-            using var resource = lifetimescope.Resolve<IDaemonResourceRepository>();
-            resource.ResourceMonster();
-        }
-    }
-
-    /// <summary>
-    ///     容易不自覺產生 memory leak 的語法，但使用 container 取出物件
-    /// </summary>
-    /// <param name="container"></param>
-    private static void MemoryLeakMethod03(IContainer container)
-    {
-        while (true)
-        {
-            using var resource = container.Resolve<IDaemonResourceRepository>();
-            resource.ResourceMonster();
+            using var service = lifetimeScope.Resolve<IDomainService>();
+            service.GetServiceName();
+            Thread.Sleep(1000);
         }
     }
 
@@ -68,8 +59,9 @@ internal class Program
     {
         while (true)
         {
-            var resource = new DaemonResourceRepository();
-            resource.ResourceMonster();
+            var service = new DomainService(new DaemonResourceRepository());
+            service.GetServiceName();
+            Thread.Sleep(1000);
         }
     }
 
@@ -81,24 +73,10 @@ internal class Program
     {
         while (true)
         {
-            using var lifetimescope = container.BeginLifetimeScope();
-            using var resource = lifetimescope.Resolve<IDaemonResourceRepository>();
-            resource.ResourceMonster();
-        }
-    }
-
-    /// <summary>
-    ///     使用 Child Scope 來管理這區域中產生的物件，可以確保物件在這個區域使用完畢後會被釋放(意義同 NoMemoryLeakMethod02)
-    /// </summary>
-    /// <param name="container"></param>
-    private static void NoMemoryLeakMethod03(IContainer container)
-    {
-        while (true)
-        {
             using var lifetimeScope = container.BeginLifetimeScope();
-            var resource = lifetimeScope.Resolve<IDaemonResourceRepository>();
-
-            resource.ResourceMonster();
+            using var resource = lifetimeScope.Resolve<IDomainService>();
+            resource.GetServiceName();
+            Thread.Sleep(1000);
         }
     }
 
@@ -106,14 +84,15 @@ internal class Program
     ///     使用 Child Scope 來管理這區域中產生的物件，可以確保物件在這個區域使用完畢後會被釋放
     /// </summary>
     /// <param name="container"></param>
-    private static void NoMemoryLeakMethod04(IContainer container)
+    private static void NoMemoryLeakMethod03(IContainer container)
     {
         using var lifetimeScope = container.BeginLifetimeScope();
         while (true)
         {
             using var childScope = lifetimeScope.BeginLifetimeScope();
-            using var resource = childScope.Resolve<IDaemonResourceRepository>();
-            resource.ResourceMonster();
+            using var resource = childScope.Resolve<IDomainService>();
+            resource.GetServiceName();
+            Thread.Sleep(1000);
         }
     }
 }

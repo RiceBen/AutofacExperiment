@@ -20,10 +20,7 @@ public class DaemonResourceRepository : IDaemonResourceRepository
     /// <summary>
     /// 執行與釋放 (Free)、釋放 (Release) 或重設 Unmanaged 資源相關聯之應用程式定義的工作。
     /// </summary>
-    public void Dispose()
-    {
-        Console.WriteLine($"{Name} dispose!");
-    }
+    public void Dispose() => Console.WriteLine($"{Name} dispose!");
 
-    public void ResourceMonster() => Console.WriteLine($"Object HashCode:{_eid}");
+    public string ResourceMonster() => $"Object HashCode:{_eid}";
 }

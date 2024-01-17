@@ -1,6 +1,8 @@
-﻿namespace AutofacExperiment.Access.Daemon;
+﻿using System;
 
-public interface IDomainService
+namespace AutofacExperiment.Access.Daemon;
+
+public interface IDomainService : IDisposable
 {
     string GetServiceName();
 }

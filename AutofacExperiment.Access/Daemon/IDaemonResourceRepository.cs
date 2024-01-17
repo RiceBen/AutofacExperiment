@@ -10,5 +10,5 @@ public interface IDaemonResourceRepository : IDisposable
     /// <summary>
     ///     Eat resource
     /// </summary>
-    void ResourceMonster();
+    string ResourceMonster();
 }
