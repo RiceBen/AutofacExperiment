@@ -16,6 +16,6 @@ public class DomainService(IDaemonResourceRepository resourceRepository) : IDoma
     
     public void Dispose()
     {
-        Console.WriteLine($"{_name} dispose!");
+        Console.WriteLine($"Service {_name} dispose!");
     }
 }

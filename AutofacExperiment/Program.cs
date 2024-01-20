@@ -14,10 +14,10 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = new ContainerBuilder();
-        builder.RegisterModule<DAModules>();
+        builder.RegisterModule<DaModules>();
 
         using var container = builder.Build();
-        Scenario01(container);
+        Scenario05(container);
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ internal class Program
 
             service.GetServiceName();
             
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
         }
     }
 
@@ -47,7 +47,7 @@ internal class Program
         {
             using var service = lifetimeScope.Resolve<IDomainService>();
             service.GetServiceName();
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
         }
     }
 
@@ -61,7 +61,7 @@ internal class Program
         {
             var service = new DomainService(new DaemonResourceRepository());
             service.GetServiceName();
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
         }
     }
 
@@ -76,7 +76,7 @@ internal class Program
             using var lifetimeScope = container.BeginLifetimeScope();
             using var resource = lifetimeScope.Resolve<IDomainService>();
             resource.GetServiceName();
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
         }
     }
 
@@ -85,7 +85,7 @@ internal class Program
     /// then resolve the dependency via the chile scope.
     /// </summary>
     /// <param name="container"><see cref="IContainer"/></param>
-    private static void NoMemoryLeakMethod03(IContainer container)
+    private static void Scenario05(IContainer container)
     {
         using var lifetimeScope = container.BeginLifetimeScope();
         while (true)
@@ -93,7 +93,7 @@ internal class Program
             using var childScope = lifetimeScope.BeginLifetimeScope();
             using var resource = childScope.Resolve<IDomainService>();
             resource.GetServiceName();
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
         }
     }
 }
